@@ -4,17 +4,36 @@
   hosts: localhost
   vars_files:
     - asg.vars
+  vars_prompt:
+    - name: access_key
+      prompt: "Enter Your AWS IAM Access_Key: "
+    - name: secret_key
+      prompt: "Enter Your AWS IAM Secret Key: "
   tasks:
     - name: "Dependancy Tasks 01-Install PIP"
       yum:
         name: pip
         state: present
-    - name: "Depandancy Task 02-Install boto"
+
+    - name: "Depandancy Task 02-Install setuptools"
+      pip:
+        name: setuptools
+        state: present
+
+    - name: "Depandancy Task 03-Install virtualenv"
+      pip:
+        name: virtualenv
+        state: present
+
+    - name: "Depandancy Task 04-Install boto"
       pip:
         name: boto
+        state: present
 
     - name: "Task-01-AWS KeyPair Creation"
       ec2_key:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
         region: "{{ region }}"
         name: "{{ key }}"
         state: present
@@ -29,9 +48,11 @@
 
     - name: "Task 03-Create Security Group"
       ec2_group:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        region: "{{ region }}"
         name: "{{ env }}_{{ sg_name }}"
         description: "22,80,443,3306 Port Created by Ansible"
-        region: "{{ region }}"
         rules:
           - proto: tcp
             from_port: 80
@@ -56,10 +77,12 @@
 
     - name: "Task 04-Create Launch configuration"
       ec2_lc:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        region: "{{ region }}"
         name: "{{ env }}_lc"
         image_id: "{{ ami }}"
         key_name: "{{ key }}"
-        region: "{{ region }}"
         security_groups: "{{ sgweb.group_id }}"
         instance_type: "{{ type }}"
         user_data_path: ./userdata.sh
@@ -71,6 +94,8 @@
     - name: "Task 05-Creating ELB"
       ec2_elb_lb:
         name: "elb"
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
         region: "{{ region }}"
         connection_draining_timeout: 60
         cross_az_load_balancing: true
@@ -102,6 +127,9 @@
 
     - name: "Task 06-ASG Creation"
       ec2_asg:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
+        region: "{{ region }}"
         name: "{{ env }}_asg"
         load_balancers: "{{ elb_status.elb.name }}"
         launch_config_name: "{{ lc_status.name }}"
@@ -111,7 +139,6 @@
         min_size: "{{ count }}"
         max_size: "{{ count }}"
         desired_capacity: "{{ count }}"
-        region: "{{ region }}"
         tags:
           - Name: ansible_app
             propagate_at_launch: true
@@ -121,6 +148,8 @@
 
     - name: "Task 07-Fetch ASG Created EC2 Details"
       ec2_instance_info:
+        aws_access_key: "{{ access_key }}"
+        aws_secret_key: "{{ secret_key }}"
         region: "{{ region }}"
         filters:
           "tag:aws:autoscaling:groupName": "{{ asg_status.auto_scaling_group_name }}"
@@ -155,7 +184,6 @@
         dest: /var/myapp/
       register: git_status
         
-            
     - name: "Task Dynamic Inventory Play 11-Application Updation -  Disabling Health Check"
       when: git_status.changed == true
       file:
