@@ -6,9 +6,11 @@
     - asg.vars
   vars_prompt:
     - name: access_key
-      prompt: "Enter Your AWS IAM Access_Key: "
+      prompt: "Enter Your AWS IAM Access_Key"
+      private: no
     - name: secret_key
-      prompt: "Enter Your AWS IAM Secret Key: "
+      prompt: "Enter Your AWS IAM Secret Key"
+      private: no
   tasks:
     - name: "Dependancy Tasks 01-Install PIP"
       yum:
@@ -28,6 +30,17 @@
     - name: "Depandancy Task 04-Install boto"
       pip:
         name: boto
+        state: present
+
+    - name: "Depandancy Task 05-Install boto3"
+      ignore_errors: true
+      pip:
+        name: boto3
+        state: present
+
+    - name: "Depandancy Task 06-Install botocore"
+      pip:
+        name: botocore
         state: present
 
     - name: "Task-01-AWS KeyPair Creation"
@@ -73,7 +86,7 @@
       register: sgweb
 
     - debug:
-        var: "sgweb.group_id"  
+        var: "sgweb.group_id"
 
     - name: "Task 04-Create Launch configuration"
       ec2_lc:
@@ -89,7 +102,7 @@
       register: lc_status
 
     - debug:
-        var: "lc_status.name" 
+        var: "lc_status.name"
 
     - name: "Task 05-Creating ELB"
       ec2_elb_lb:
@@ -113,16 +126,16 @@
             load_balancer_port: 80
             instance_port: 80
         health_check:
-            ping_protocol: http 
+            ping_protocol: http
             ping_port: 80
-            ping_path: "/health.html" 
-            response_timeout: 2 
+            ping_path: "/health.html"
+            response_timeout: 2
             interval: 10
             unhealthy_threshold: 2
             healthy_threshold: 2
       register: elb_status
 
-    - debug: 
+    - debug:
         var: "elb_status.elb.dns_name"
 
     - name: "Task 06-ASG Creation"
@@ -143,7 +156,7 @@
           - Name: ansible_app
             propagate_at_launch: true
       register: asg_status
-    - debug: 
+    - debug:
         var: "asg_status.auto_scaling_group_name"
 
     - name: "Task 07-Fetch ASG Created EC2 Details"
@@ -155,8 +168,8 @@
           "tag:aws:autoscaling:groupName": "{{ asg_status.auto_scaling_group_name }}"
           instance-state-name: [ "running"]
       register: asg_instances
-        
-          
+
+
     - name: "Task 08-Autoscale - Creating Dynamic Inventory Of Autoscaling EC2"
       add_host:
         name: "{{ item.public_ip_address }}"
@@ -168,7 +181,7 @@
         ansible_ssh_common_args: "-o StrictHostKeyChecking=no"
       with_items:
         - "{{ asg_instances.instances }}"
-        
+
 # Dyanamic Inventory Rolling Update Play
 - name: "Task Dynamic Inventory Play 09-ASG Rolling Update Start"
   hosts: asg
@@ -176,26 +189,26 @@
   serial: 1
   gather_facts: False
   vars_files:
-    - instance.vars   
+    - instance.vars
   tasks:
     - name: "Task Dynamic Inventory Play 10-Application Updation  - Cloning Git Repository"
       git:
         repo: "{{ git_url }}"
         dest: /var/myapp/
       register: git_status
-        
+
     - name: "Task Dynamic Inventory Play 11-Application Updation -  Disabling Health Check"
       when: git_status.changed == true
       file:
         path: /var/www/html/health.html
         state: touch
         mode: 0000
-            
+
     - name: "Task Dynamic Inventory Play 12-Application Updation  - Off Loading From ElB"
       when: git_status.changed == true
       pause:
         seconds: "{{ health_time }}"
-        
+
     - name: "Task Dynamic Inventory Play 13-Application Updation  - Updating App Data"
       when: git_status.changed == true
       copy:
@@ -204,14 +217,14 @@
         owner: apache
         group: apache
         remote_src: true
-              
+
     - name: "Task Dynamic Inventory Play 14-Application Updation -  Enabling Health Check"
       when: git_status.changed == true
       file:
         path: /var/www/html/health.html
         state: touch
         mode: 0444
-            
+
     - name: "Task Dynamic Inventory Play 15-Application Updation  - Loading EC2 To ELB"
       when: git_status.changed == true
       pause:
