@@ -1,6 +1,5 @@
 ---
 - name: "Create A ASG with ELB"
-  become: true
   hosts: localhost
   vars_files:
     - asg.vars
