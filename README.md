@@ -85,7 +85,8 @@ _I just explained the primary thing ASG Rolling update and Which variables I use
   tasks:
 ```
 
-### Used Variables: 
+### Used Variables:
+- asg.vars
 ```sh
 env: "ansible_project"  <---------- ProjectName
 ami: "ami-0d5eff06f840b45e9" <---------- I used us-east-1 region so the AMI under us-east-1
@@ -94,6 +95,11 @@ region: "us-east-1" <-------------- Region
 sg_name: sgroup  <--------------- Security group were I used. 
 type: "t2.micro" <---------------  Instance_type
 count: "2" <----------------- ASG Count
+```
+- cred.vars
+```sh
+access_key: "<your-access-key>"     <------------------ Enter your IAM Access Key
+secret_key: "<your-secret-key>"     <------------------ Enter your IAM Secret Key
 ```
 ---
 ## Conclusion 
