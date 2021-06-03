@@ -99,8 +99,7 @@ count: "2" <----------------- ASG Count
 ## Conclusion 
 _This playbook is used for ASG rolling update with a website contents from git without recreate instances. Furthermore, I tried to create a additional AWS infrastructure with a (ELB + ASG + Lauch Configuration + Security Group) through Ansible. So, you guys please reffer the playbook for creating infrastructure and dynamic inventory works with localhost inventory_
 
-_By
-
-Yousaf K Hamza_
+_By_
+_Yousaf K Hamza_
 
 [LinkedIn](linkedin.com/in/yousaf-k-hamza-9274ba145)
