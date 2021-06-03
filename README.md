@@ -101,5 +101,4 @@ _This playbook is used for ASG rolling update with a website contents from git w
 
 _By_
 _Yousaf K Hamza_
-
 [LinkedIn](linkedin.com/in/yousaf-k-hamza-9274ba145)
