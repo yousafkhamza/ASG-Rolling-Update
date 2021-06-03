@@ -1,6 +1,7 @@
 # ASG Rolling Update (Ansible)
 ---
 ## Description
+
 _Client Query_: I have an ELB (Elastic LoadBalancer) in amazon and that ELB under instances is registered from an ASG. Also, the developers are uploaded the site contents to the git, and the developers make updates on git (ELB git changes through user-data with git). So, that's very complicated each update time has to change the count of ASG but it's very annoying and expensive creates and removes instances unwanted is there any solution? 
 _Answer_: We have created a ASG oriented ansible playbook with dynamic inventory and its help to update git contents which if the current available instances and you can use this manually or automate via jenkins like (continues deployment) and who use the playbook it never needs to create instances unwanted. 
 ---
