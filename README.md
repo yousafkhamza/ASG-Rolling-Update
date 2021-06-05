@@ -43,8 +43,15 @@ _Answer_: We have created a ASG oriented ansible playbook with dynamic inventory
 - [pause](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/pause_module.html)
 ---
 ### How To Use
-Please insatall ansible first please check out the pre-request section.
+Ansible Installation article is in pre-request section so please check out the pre-request section.
 ```sh
+amzon-linux-extras install -y ansible2
+yum install git -y
+git clone https://github.com/yousafkhamza/ASG-Rolling-update-Ansible.git
+cd ASG-Rolling-update-Ansible
+
+---Please-Change Your-Credentials---
+
 ansible-playbook main.yml
 ```
 ---
