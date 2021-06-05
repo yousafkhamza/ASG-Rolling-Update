@@ -11,7 +11,7 @@ _Client Query_: I have an ELB (Elastic LoadBalancer) in amazon and that ELB unde
 _Answer_: We have created a ASG oriented ansible playbook with dynamic inventory and its help to update git contents which if the current available instances and you can use this manually or automate via jenkins like (continues deployment) and who use the playbook it never needs to create instances unwanted.
 
 ---
-## Feutures
+## Features
 - ASG Rolling updates through ansible-playbook (_Primary_)
 - Includs ELB + ASG + Security group infrastructure on this ansible-playbook
 - No need for hosts (Inventory file) for ASG under client servers. Because its work with Dynamic Inventory
