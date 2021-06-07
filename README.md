@@ -1,10 +1,10 @@
-# ASG Rolling Update (Ansible)
+# ASG Rolling Update (Ansible + Jenkins)
 [![Builds](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 ---
 ## Description
 
-I just try to a new explanation method for easy to convey my work and details. Basically, this is an ansible-playbook with ASG Rolling update and Create an AWS Infrastructure with (ELB + ASG + Security Group). 
+I just try to a new explanation method for easy to convey my work and details. Basically, this is an ansible-playbook with ASG Rolling update and Create an AWS Infrastructure with (ELB + ASG + Security Group). Its automated with Jenkins.
 
 _Client Query_: I have an ELB (Elastic LoadBalancer) in amazon and that ELB under instances is registered from an ASG. Also, the developers are uploaded the site contents to the git, and the developers make updates on git (ELB git changes through user-data with git). So, that's very complicated each update time has to change the count of ASG but it's very annoying and expensive creates and removes instances unwanted is there any solution?
 
@@ -54,6 +54,12 @@ cd ASG-Rolling-update-Ansible
 
 ansible-playbook main.yml
 ```
+---
+## Architacture with Jenkins Automated
+
+- Architacture
+
+![alt text](https://i.ibb.co/0qvWnBf/rolling-update.jpg)
 ---
 ## Behind the playbook
 _I just explained the primary thing ASG Rolling update and Which variables I used so if you have any further doubts please look at the YAML file complete._
