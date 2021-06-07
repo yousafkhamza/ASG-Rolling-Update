@@ -59,7 +59,7 @@ ansible-playbook main.yml
 
 - Architacture
 
-![alt text](https://i.ibb.co/0qvWnBf/rolling-update.jpg)
+![alt text](https://i.ibb.co/TqsqVML/rolling-update.jpg)
 ---
 ## Behind the playbook
 _I just explained the primary thing ASG Rolling update and Which variables I used so if you have any further doubts please look at the YAML file complete._
