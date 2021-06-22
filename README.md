@@ -120,6 +120,7 @@ secret_key: "<your-secret-key>"     <------------------ Enter your IAM Secret Ke
 ## Conclusion 
 _This playbook is used for ASG rolling update with a website contents from git without recreate instances. Furthermore, I tried to create a additional AWS infrastructure with a (ELB + ASG + Lauch Configuration + Security Group) through Ansible. So, you guys please reffer the playbook for creating infrastructure and dynamic inventory works with localhost inventory_
 
-_By_
-_Yousaf K Hamza_
-[LinkedIn](linkedin.com/in/yousaf-k-hamza-9274ba145)
+<p align="center">
+<a href="mailto:yousaf.k.hamza@gmail.com"><img src="https://img.shields.io/badge/-yousaf.k.hamza@gmail.com-D14836?style=flat&logo=Gmail&logoColor=white"/></a>
+<a href="https://www.linkedin.com/in/yousafkhamza"><img src="https://img.shields.io/badge/-Linkedin-blue"/></a>
+<a href="https://techbit-new.blogspot.com/"><img src="https://img.shields.io/badge/-Blogger-orange"/></a>
