@@ -47,8 +47,8 @@ Ansible Installation article is in pre-request section so please check out the p
 ```sh
 amzon-linux-extras install -y ansible2
 yum install git -y
-git clone https://github.com/yousafkhamza/ASG-Rolling-update-Ansible.git
-cd ASG-Rolling-update-Ansible
+git clone https://github.com/yousafkhamza/ASG-Rolling-Update.git
+cd ASG-Rolling-Update
 
 ---Please-Change Your-Credentials---
 
